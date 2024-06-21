@@ -1,0 +1,54 @@
+<configuration>
+
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <!-- encoders are assigned the type
+    ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
+    <encoder>
+      <pattern>%d{"yyyy-MM-dd'T'HH:mm:ss,SSS"} [%thread] %highlight(%-5level) %logger{36} - %msg %n</pattern>
+    </encoder>
+  </appender>
+
+  <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+    <file> /opt/app/scoop/logs/scoop.log </file>
+    <append>true</append>
+    <encoder>
+      <pattern>%d{"yyyy-MM-dd'T'HH:mm:ss,SSS"} [%thread] %-5level %logger{36} - %msg %n</pattern>
+    </encoder>
+  </appender>
+
+  <logger name="org.apache.kafka" level="info">
+    <appender-ref ref="STDOUT" />
+    <appender-ref ref="FILE" />
+  </logger>
+
+  <appender name="MULOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file> /opt/app/scoop/logs/mu-metrics.log </file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+      <fileNamePattern>/opt/app/scoop/logs/mu-metrics-${roll-timestamp}.log.%i.gz</fileNamePattern>
+      <minIndex>1</minIndex>
+      <maxIndex>5</maxIndex>
+    </rollingPolicy>
+
+    <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+      <maxFileSize>100MB</maxFileSize>
+    </triggeringPolicy>
+
+    <encoder>
+      <pattern>%msg %n</pattern>
+    </encoder>
+  </appender>
+
+  <logger name="toolbox.mulog.logback-publisher" level="info" additivity="false">
+    <appender-ref ref="MULOG" />
+  </logger>
+
+  <logger name="com.zaxxer.hikari.pool" level="info">
+    <appender-ref ref="STDOUT" />
+    <appender-ref ref="FILE" />
+  </logger>
+
+  <root level="debug">
+    <appender-ref ref="STDOUT" />
+    <appender-ref ref="FILE" />
+  </root>
+</configuration>
