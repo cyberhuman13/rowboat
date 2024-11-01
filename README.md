@@ -19,8 +19,10 @@ Notably, the library does it by streaming the data through all the steps, so tha
 
 One doesn't wait for any of the steps to be complete in order to begin the next one.
 The data flows like water in a river, oin a steady stream and without overflowing
-the banks--that is to say, without piling up in memory at any point. Hence, the
+the banks—that is to say, without piling up in memory at any point. Hence, the
 `rowboat` name.
+
+![Rowboat Library](https://github.com/user-attachments/assets/7ad5d7cc-5485-414c-a245-3bf113ca5563)
 
 This is accomplished by calling Akka Streams from Clojure. This Scala library
 can be configured to stream data through any graph of transformations (at each
@@ -28,7 +30,7 @@ of the graph's nodes), even a graph with loops, while handling backpressure.
 At no producer-to-consumer edge of the graph does the producer provide more
 data than the consumer has the capacity to process at any given time.
 
-Two Akka graphs are used for this purpose, connected by Clojure channels--as if
+Two Akka graphs are used for this purpose, connected by Clojure channels—as if
 a wormhole linking two separate universes. This is because the zipping node
 requires a `Source` of `Source`s (for technical details, including an ASCII
 drawing of the graphs and the wormhole, see the extensive comments in the code
