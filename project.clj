@@ -2,7 +2,7 @@
 #_(cemerick.pomegranate.aether/register-wagon-factory! "http"
   #(org.apache.maven.wagon.providers.http.HttpWagon.))
 
-(defproject silverberry13/rowboat "0.1.0"
+(defproject net.clojars.cyberhuman/rowboat "0.1.0"
   :dependencies [[tick/tick "0.7.5"]
                  [tolitius/yang "0.1.41"]
                  [metosin/jsonista "0.3.8"]
@@ -38,7 +38,11 @@
                    :jvm-opts       ["-Xmx2g"]}
              :jar {:resource-paths ["target/about"]}}
 
-  :plugins [[lein-ancient "1.0.0-RC4-SNAPSHOT"]]
+  :plugins [[lein-ancient "1.0.0-RC4-SNAPSHOT"]
+            [lein-licenses "0.2.2"]]
+
+  :license {:name "Business Source License"
+            :url "https://akka.io/bsl/license"}
 
   :repositories [["clojars" {:url "https://repo.clojars.org/"}]
                  ["maven-central" {:url "https://repo1.maven.org/maven2"}]])
