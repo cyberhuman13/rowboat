@@ -3,7 +3,7 @@
             [clojure.tools.logging :as log]
             [rowboat.constants :as constants]
             [clojure.core.async :refer [>!! <!!]])
-  (:import (scala Function0 Tuple2)
+  (:import (scala Function0)
            (scala.concurrent Future)
            (akka.stream Inlet Outlet)
            (scala.collection Iterator)
@@ -11,20 +11,8 @@
            (akka.stream.scaladsl Source Sink)
            (akka.stream SourceShape SinkShape)
            (java.util.concurrent ArrayBlockingQueue)
-           (akka.stream.alpakka.file ArchiveMetadata)
            (akka.stream.scaladsl GraphDSL$Builder GraphDSL$Implicits$)
            (akka.stream.stage GraphStage GraphStageLogic InHandler OutHandler)))
-
-(defn csv->file [filename sources]
-  (Source/apply
-    (reduce-kv (fn [acc index chunk]
-                 (.$colon$colon acc
-                                (Tuple2/apply
-                                  (ArchiveMetadata/create
-                                    (str filename (when (> (count sources) 1) "_" index) ".csv"))
-                                  chunk)))
-               Nil$/MODULE$
-               sources)))
 
 (defn reducible->iterator
   "The libraries like next.jdbc favor Clojure reducibles (IReduceInit),
